@@ -100,7 +100,6 @@ $results = $connect-> select($query);
 								<li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main"></i></li>
 								<li><a href="#"><i class="icon-newspaper"></i> <span>Home</span></a></li>
 								<li class="navigation-header"><span>Publish</span> <i class="icon-menu" title="Publish"></i></li>
-								<li><a href="AddAnnouncement.php"><i class="icon-bubble-lines4"></i> <span>Publish Announcement</span></a></li>
 								<li class="active"><a href="AddNews.php"><i class="icon-newspaper2"></i> <span>Publish News</span></a></li>
 							</ul>
 						</div>
