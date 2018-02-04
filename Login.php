@@ -79,8 +79,7 @@
 
                             <div class="form-group">
                             	<input type="submit" class="btn bg-orange btn-block" Text="Log In" value="LOG IN"/>
-                                <button id="sweet_success" name="sweet_success" class="btn btn-primary"></button>
-                                <button id="sweet_error" name="sweet_error" class="btn btn-primary"></button>
+                               
                             </div>
 
                         </div>

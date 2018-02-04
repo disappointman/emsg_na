@@ -12,7 +12,13 @@ if(isset($_POST["title"])){
 	}
 	else
 		insert($title,$body,$connect,$company);
+}else{
+	echo '<script type="text/javascript">
+	window.location ="AddAnnouncement.php"
+</script>';
 }
+
+
 function insert($title,$body,$connect,$company,$picture = null){
 	if($picture != null){
 		$query = "INSERT INTO information(title,body,picture,`datetime`,type,iduser_information) VALUES('".$title."','".$body."','".$picture."','".date("Y-m-d H:i:s")."','1',1)";
