@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 if(!isset($_SESSION['id'])){
 	echo '<script>window.location = "login.php";</script>';
 }
@@ -71,7 +71,7 @@ if(!isset($_SESSION['id'])){
 
 						<ul class="dropdown-menu dropdown-menu-right">
 							<!-- <li><a href="#"><i class="icon-cog5"></i> Account settings</a></li> -->
-							<li><a href="#"><i class="icon-switch2"></i> Logout</a></li>
+							<li><a href="logoutFunction.php"><i class="icon-switch2"></i> Logout</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -138,10 +138,34 @@ if(!isset($_SESSION['id'])){
 					                	</div>
 									</div>
 
+									<?php
+										require("config.php");
+										require("AccountHandler.php");
+
+										$handler = new AccountHandler();
+										$conn = new Connect();
+										$con = $conn -> connectDB();
+
+										$user = "";
+
+										$results= $handler->getNameById($_SESSION['id']);
+										if(isset($results)){
+											$user = $results;
+										}else{
+											echo '<script> window.location = "login.php";</script>';
+										}
+
+									?>
+
 									<div class="panel-body">
 										<div class="form-group">
 											<label><strong>Title:</strong> </label>
 											<input type="text" class="form-control" id="title" name="title" required>
+										</div>
+
+										<div class="form-group">
+											<label><strong>Author:</strong> </label>
+											<input type="text" class="form-control" value="<?php echo $user;?>" id="author" name="author" required>
 										</div>
 
 										<div class="form-group">
