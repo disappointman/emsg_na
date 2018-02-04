@@ -1,3 +1,10 @@
+<?php
+
+if(!isset($_SESSION['id'])){
+	echo '<script>window.location = "login.php";</script>';
+}
+?>
+
 <html>
 <head>
 	<meta charset="utf-8">

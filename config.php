@@ -4,7 +4,7 @@ class Connect
 	private $db_host = 'localhost';
 	private $db_user ='root';
 	private $db_pass='';
-	private $db_database ='emsg_na';
+	private $db_database ='creotec_na';
 	private $conn = '';
 
 	public function __construct(){

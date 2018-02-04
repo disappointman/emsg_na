@@ -12,35 +12,34 @@ if(isset($_POST["title"])){
 	}
 	else
 		insert($title,$body,$connect);
+}else{
+
 }
 
 function insert($title,$body,$connect,$picture = null){
 	if($picture != null){
-		$query = "INSERT INTO information(title,body,picture,`datetime`,type,iduser_information) VALUES('".$title."','".$body."','".$picture."','".date("Y-m-d H:i:s")."','1',1)";
+		$query = "INSERT INTO announcement(title,body,author,picture,`datetime`,iduser) VALUES('".$title."','".$body."','".$author."','".$picture."','".date("Y-m-d H:i:s")."','".$_SESSION['id']."')";
 	}
 	else{
-		$query = "INSERT INTO information(title,body,`datetime`,type,iduser_information) VALUES('".$title."','".$body."','".date("Y-m-d H:i:s")."','1',1)";
+		$query = "INSERT INTO announcement(title,body,author, `datetime`,iduser) VALUES('".$title."','".$body."','".$author."','".$picture."','".date("Y-m-d H:i:s")."','".$_SESSION['id']."')";
 	}
 
 	try{
-		$lastId = $connect->insertWithLastId($query);
-	}
-	catch(Exception $ex){
-		echo $ex;
-	}
-
-	if($lastId !=null){
-		$query ="INSERT INTO announcement(idinformation) VALUES(".$lastId.")";
 		$result = $connect->insert($query);
-		 echo '<script type="text/javascript">
+		if($result){
+			echo '<script type="text/javascript">
 		 			window.location = "AddAnnouncement.php";
 		 			alert("Success!");
 		 			</script>';
-	}else{
-		 echo '<script type="text/javascript">
+		}else{
+			echo '<script type="text/javascript">
 		 			window.location = "AddAnnouncement.php";
 		 			alert("Failed!");
 		 			</script>';
+		}
+	}
+	catch(Exception $ex){
+		echo $ex;
 	}
 }
 ?>
