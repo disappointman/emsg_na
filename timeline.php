@@ -1,5 +1,8 @@
 <?php
 session_start();
+if(!isset($_SESSION['counter'])){
+	$_SESSION['counter'] = 3;
+}
 if($_SESSION['counter']!=0)
 	$counter = $_SESSION['counter'];
 else
@@ -8,9 +11,13 @@ require_once('config.php');
 $connect = new Connect();
 $query = "SELECT * FROM announcement ORDER BY idannouncement DESC LIMIT $counter";
 $announcements = $connect->select($query);
+$visible = 'block';
+
+if($counter > mysqli_num_rows($announcements)){
+	$visible = 'none';
+}
+
 ?>
-
-
 
 <html>
 <head>
@@ -157,122 +164,110 @@ $announcements = $connect->select($query);
 						<div class="timeline-container">
 
 							<!-- Announcement -->
-							<div class="timeline-row">
-								<div class="timeline-icon" title="Announcement">
-									<div class="bg-info-400">
-										<i class="icon-bubble-lines4"></i>
-									</div>
-								</div>
-								<?php if($announcements){
-									foreach($announcements as $info){?>
-								<div class="panel panel-white timeline-content">
-									<div class="panel-heading">
-										<h3 class="panel-title"><?php echo $info['author'];?></h3>
-										<div class="heading-elements">
-											<h3 class="panel-title text-muted"><?php echo $info['dateandtime'];?></h3>
-					                	</div>
+
+						    <?php if($announcements){
+								foreach($announcements as $info){?>
+
+								<div class="timeline-row">
+									<div class="timeline-icon" title="Announcement">
+										<div class="bg-info-400">
+											<i class="icon-bubble-lines4"></i>
+										</div>
 									</div>
 
-									<div class="panel-body">
-										
-
-
-										<div class="col-lg-6">
-											<h3 class="text-semibold"><?php echo $info['title'];?></h3>
-											<p class="content-group"><?php echo $info['body'];?></p>
+									<div class="panel panel-white timeline-content">
+										<div class="panel-heading">
+											<h3 class="panel-title"><?php echo $info['author'];?></h3>
+											<div class="heading-elements">
+												<h3 class="panel-title text-muted"><?php echo $info['dateandtime'];?></h3>
+						                	</div>
 										</div>
 
-										<div class="col-lg-6">
-											<div class="gallery-container">
-										    
-											    <div class="tz-gallery">
+										<div class="panel-body">
+											<div class="col-lg-6">
+												<h3 class="text-semibold"><?php echo $info['title'];?></h3>
+												<p class="content-group"><?php echo $info['body'];?></p>
+											</div>
 
-											        <div class="row">
-											        	<center>
-
-										        		<div class="col-sm-3 col-md-3">
-											                <a class="lightbox" href="assets/images/backgrounds/2.jpg">
-											                    <img src="assets/images/backgrounds/2.jpg">
-											                </a>
-											            </div>
-
-											            <div class="col-sm-3 col-md-3">
-											                <a class="lightbox" href="assets/images/backgrounds/3.jpg">
-											                    <img src="assets/images/backgrounds/3.jpg">
-											                </a>
-											            </div>
-
-											            <div class="col-sm-3 col-md-3">
-											                <a class="lightbox" href="assets/images/backgrounds/4.jpg">
-											                    <img src="assets/images/backgrounds/4.jpg">
-											                </a>
-											            </div>
-
-											            <div class="col-sm-3 col-md-3">
-											                <a class="lightbox" href="assets/images/backgrounds/3.jpg">
-											                    <img src="assets/images/backgrounds/3.jpg">
-											                </a>
-											            </div>
-
-											            <div class="col-sm-3 col-md-3">
-											                <a class="lightbox" href="assets/images/backgrounds/4.jpg">
-											                    <img src="assets/images/backgrounds/4.jpg">
-											                </a>
-											            </div>
-
-											            <div class="col-sm-3 col-md-3">
-											                <a class="lightbox" href="assets/images/backgrounds/3.jpg">
-											                    <img src="assets/images/backgrounds/3.jpg">
-											                </a>
-											            </div>
-
-											            <div class="col-sm-3 col-md-3">
-											                <a class="lightbox" href="assets/images/backgrounds/5.jpg">
-											                    <img src="assets/images/backgrounds/5.jpg">
-											                </a>
-											            </div>
-
-											            </center>
-
-											        </div>
-
-											    </div>
-
+											<div class="col-lg-6">
+												<div class="gallery-container">
+												    <div class="tz-gallery">
+												        <div class="row">
+												        	<center>
+												        		<div class="col-sm-3 col-md-3">
+													                <a class="lightbox" href="assets/images/backgrounds/2.jpg">
+													                    <img src="assets/images/backgrounds/2.jpg">
+													                </a>
+													            </div>
+													            <div class="col-sm-3 col-md-3">
+													                <a class="lightbox" href="assets/images/backgrounds/3.jpg">
+													                    <img src="assets/images/backgrounds/3.jpg">
+													                </a>
+													            </div>
+													            <div class="col-sm-3 col-md-3">
+													                <a class="lightbox" href="assets/images/backgrounds/4.jpg">
+													                    <img src="assets/images/backgrounds/4.jpg">
+													                </a>
+													            </div>
+													            <div class="col-sm-3 col-md-3">
+													                <a class="lightbox" href="assets/images/backgrounds/3.jpg">
+													                    <img src="assets/images/backgrounds/3.jpg">
+													                </a>
+													            </div>
+													            <div class="col-sm-3 col-md-3">
+													                <a class="lightbox" href="assets/images/backgrounds/4.jpg">
+													                    <img src="assets/images/backgrounds/4.jpg">
+													                </a>
+													            </div>
+													            <div class="col-sm-3 col-md-3">
+													                <a class="lightbox" href="assets/images/backgrounds/3.jpg">
+													                    <img src="assets/images/backgrounds/3.jpg">
+													                </a>
+													            </div>
+													            <div class="col-sm-3 col-md-3">
+													                <a class="lightbox" href="assets/images/backgrounds/5.jpg">
+													                    <img src="assets/images/backgrounds/5.jpg">
+													                </a>
+													            </div>
+												            </center>
+												        </div>
+												    </div>
+												</div>
 											</div>
 										</div>
 
-										
-
-										
-										
-									</div>
-
-									<div class="panel-footer ">
-										<div class="heading-elements">
-											<span class="heading-btn pull-right">
-												<a href="#" class="btn btn-link">Read post <i class="icon-arrow-right14 position-right"></i></a>
-												<a href="#" class="btn btn-link"><i class="icon-share2 position-right"></i> Share</a>
-											</span>
+										<div class="panel-footer">
+											<div class="heading-elements">
+												<span class="heading-btn pull-right">
+													<a href="#" class="btn btn-link">Read post <i class="icon-arrow-right14 position-right"></i></a>
+													<a href="#" class="btn btn-link"><i class="icon-share2 position-right"></i> Share</a>
+												</span>
+											</div>
 										</div>
 									</div>
 
-
 								</div>
-							</div>
+									
+							<?php }}?>
 							<!-- /Annoucement -->
 
 						</div>
 					</div>
 					<!-- Timeline -->
-
+					
 					<!-- Load More -->
 			        <div class="row">
-					    <div class="text-center">
-					        <button class="btn btn-link">Load More...</button>
+					    <div class="text-center" style='display:<?php echo $visible; ?>'>
+					        <a class="btn btn-link" href="counterSetter.php">Load More...</a>
+					        <label> </label>
 					    </div>
+					    <div class="text-center" style='display:<?php if($visible == "none") { echo "block"; } else { echo "none"; }?>'>
+					        <label> Nothing follows... </label>
+					    </div>
+					    
 					</div>
 					<!-- Load More -->
-					<?php }}?>
+
 				</div>
 			</div>
 			<!-- /Main content -->

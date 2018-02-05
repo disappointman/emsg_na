@@ -10,7 +10,7 @@ if(isset($_POST["title"])){
 	$body = mysqli_real_escape_string($con,stripcslashes(trim($_POST["body"])));
 	$author = mysqli_real_escape_string($con,stripcslashes(trim($_POST["author"])));
 	if(isset($_FILES['picture']) && $_FILES['picture']['size'] > 0){
-		$image = addslashes(file_get_contents($_FILES['picture']['tmp_name'])); //SQL Injection defence!
+		$image = addslashes(file_get_contents($_FILES['picture']['tmp_name'])); //SQL Injection defence! 
 		insert($title,$body,$author,$connect,$image);
 	}
 	else
