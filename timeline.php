@@ -3,7 +3,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Add Announcements</title>
+	<title>CREOTEC - Announcement Feed</title>
 
 	<link rel="shortcut icon" type="image/x-icon" href="assets/favicon.ico">
 
@@ -154,11 +154,7 @@
 									<div class="panel-heading">
 										<h3 class="panel-title">Author</h3>
 										<div class="heading-elements">
-											<ul class="icons-list">
-												<li class="dropdown">
-													<p></p>
-												</li>
-						                	</ul>
+											<h3 class="panel-title text-muted">Date Time</h3>
 					                	</div>
 									</div>
 
@@ -236,7 +232,7 @@
 										
 									</div>
 
-									<div class="panel-footer panel-footer-transparent">
+									<div class="panel-footer ">
 										<div class="heading-elements">
 											<span class="heading-btn pull-right">
 												<a href="#" class="btn btn-link">Read post <i class="icon-arrow-right14 position-right"></i></a>
