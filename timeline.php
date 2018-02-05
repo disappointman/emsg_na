@@ -1,3 +1,17 @@
+<?php
+session_start();
+if($_SESSION['counter']!=0)
+	$counter = $_SESSION['counter'];
+else
+	$counter = 3;
+require_once('config.php');
+$connect = new Connect();
+$query = "SELECT * FROM announcement ORDER BY idannouncement DESC LIMIT $counter";
+$announcements = $connect->select($query);
+?>
+
+
+
 <html>
 <head>
 	<meta charset="utf-8">
@@ -149,12 +163,13 @@
 										<i class="icon-bubble-lines4"></i>
 									</div>
 								</div>
-
+								<?php if($announcements){
+									foreach($announcements as $info){?>
 								<div class="panel panel-white timeline-content">
 									<div class="panel-heading">
-										<h3 class="panel-title">Author</h3>
+										<h3 class="panel-title"><?php echo $info['author'];?></h3>
 										<div class="heading-elements">
-											<h3 class="panel-title text-muted">Date Time</h3>
+											<h3 class="panel-title text-muted"><?php echo $info['dateandtime'];?></h3>
 					                	</div>
 									</div>
 
@@ -163,8 +178,8 @@
 
 
 										<div class="col-lg-6">
-											<h3 class="text-semibold">Title</h3>
-											<p class="content-group">Announcement Body</p>
+											<h3 class="text-semibold"><?php echo $info['title'];?></h3>
+											<p class="content-group"><?php echo $info['body'];?></p>
 										</div>
 
 										<div class="col-lg-6">
@@ -257,7 +272,7 @@
 					    </div>
 					</div>
 					<!-- Load More -->
-
+					<?php }}?>
 				</div>
 			</div>
 			<!-- /Main content -->
