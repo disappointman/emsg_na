@@ -14,8 +14,8 @@
 	<link href="assets/css/core.css" rel="stylesheet" type="text/css">
 	<link href="assets/css/components.css" rel="stylesheet" type="text/css">
 	<link href="assets/css/colors.css" rel="stylesheet" type="text/css">
-	<link href="assets/css/structure.css" rel="stylesheet" type="text/css">
-	<link href="assets/css/animate.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/gallery-clean.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.css">
 	<!-- /global stylesheets -->
 
 	<!-- Core JS files -->
@@ -35,8 +35,25 @@
 	<script type="text/javascript" src="assets/js/plugins/forms/styling/uniform.min.js"></script>
 
 	<script type="text/javascript" src="assets/js/core/app.js"></script>
-	<script type="text/javascript" src="assets/js/pages/form_validation.js"></script>
+	<script type="text/javascript" src="assets/js/pages/timelines.js"></script>
 	<!-- /theme JS files -->
+
+	<style type="text/css">
+		img {
+		    max-width: 100%;
+		    max-height: 100%;
+		    vertical-align: middle;
+
+		    padding-bottom: 20px;
+		}
+
+		.center{
+		    display:block;
+		    margin:auto;
+		}
+
+
+	</style>
 </head>
 <body>
 	<!-- Main navbar -->
@@ -91,10 +108,12 @@
 							<ul class="navigation navigation-main navigation-accordion">
 
 								<!-- Main -->
-								<li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main"></i></li>
-								<li><a href="#"><i class="icon-newspaper"></i> <span>Home</span></a></li>
+								<li class="navigation-header"><span>Feeds</span> <i class="icon-menu" title="Main"></i></li>
+								<li><a href="#"><i class="icon-newspaper"></i> <span>Announcement Feed</span></a></li>
+
 								<li class="navigation-header"><span>Publish</span> <i class="icon-menu" title="Publish"></i></li>
 								<li class="active"><a href="index.php"><i class="icon-pencil7"></i> <span>Publish News</span></a></li>
+								<!-- Main -->
 								
 							</ul>
 						</div>
@@ -107,6 +126,7 @@
 
 			<!-- Main content -->
 			<div class="content-wrapper">
+
 				<!-- Page header -->
 				<div class="page-header page-header-default">
 					<div class="page-header-content">
@@ -116,61 +136,133 @@
 					</div>
 				</div>
 
-  <div class="container" style="margin-left: 190px; width: 90%;">
-    <div class="row">
-      <div class="col-lg-9 col-md-9 col-sm-9">
-        <div class="row">
-          <div class="leftbar_content" >
-           
-           
-            <div class="single_stuff wow fadeInDown">
-              <div class="single_stuff_img"> <a href="pages/single.html"><img src="assets/images/stuff_img1.jpg" alt=""></a> </div>
-              <div class="single_stuff_article">
-                <div class="single_sarticle_inner"> <a class="stuff_category" href="#">Technology</a>
-                  <div class="stuff_article_inner"> <span class="stuff_date">Nov <strong>17</strong></span>
-                    <h2><a href="pages/single.html">Duis quis erat non nunc fringilla</a></h2>
-                    <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a pharetra urna. Morbi dui lectus, pharetra nec elementum eget, vulputate ut nisi. Aliquam accumsan, nulla sed feugiat vehicula...</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+				<div class="panel-body">
 
-            <div class="single_stuff wow fadeInDown">
-              <div class="single_stuff_img"> <a href="#"><img src="assets/images/stuff_img1.jpg" alt=""></a> </div>
-              <div class="single_stuff_article">
-                <div class="single_sarticle_inner"> <a class="stuff_category" href="#">Technology</a>
-                  <div class="stuff_article_inner"> <span class="stuff_date">Nov <strong>17</strong></span>
-                    <h2><a href="#">Duis quis erat non nunc fringilla</a></h2>
-                    <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a pharetra urna. Morbi dui lectus, pharetra nec elementum eget, vulputate ut nisi. Aliquam accumsan, nulla sed feugiat vehicula...</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+					<!-- Timeline -->
+					<div class="timeline timeline-left">
+						<div class="timeline-container">
 
-            <div class="single_stuff wow fadeInDown">
-              <div class="single_stuff_img"> <a href="#"><img src="assets/images/stuff_img1.jpg" alt=""></a> </div>
-              <div class="single_stuff_article">
-                <div class="single_sarticle_inner"> <a class="stuff_category" href="#">Technology</a>
-                  <div class="stuff_article_inner"> <span class="stuff_date">Nov <strong>17</strong></span>
-                    <h2><a href="#">Duis quis erat non nunc fringilla</a></h2>
-                    <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a pharetra urna. Morbi dui lectus, pharetra nec elementum eget, vulputate ut nisi. Aliquam accumsan, nulla sed feugiat vehicula...</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="stuffpost_paginatinonarea wow slideInLeft" style="margin-left: 150px;">
-              <ul class="newstuff_pagnav">
-                <li><a class="active_page" href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-              </ul>
-            </div>
-        </div>
-      </div>
-    </div>
-  </div>
+							<!-- Announcement -->
+							<div class="timeline-row">
+								<div class="timeline-icon" title="Announcement">
+									<div class="bg-info-400">
+										<i class="icon-bubble-lines4"></i>
+									</div>
+								</div>
+
+								<div class="panel panel-white timeline-content">
+									<div class="panel-heading">
+										<h3 class="panel-title">Author</h3>
+										<div class="heading-elements">
+											<ul class="icons-list">
+												<li class="dropdown">
+													<p></p>
+												</li>
+						                	</ul>
+					                	</div>
+									</div>
+
+									<div class="panel-body">
+										
+
+
+										<div class="col-lg-6">
+											<h3 class="text-semibold">Title</h3>
+											<p class="content-group">Announcement Body</p>
+										</div>
+
+										<div class="col-lg-6">
+											<div class="gallery-container">
+										    
+											    <div class="tz-gallery">
+
+											        <div class="row">
+											        	<center>
+
+										        		<div class="col-sm-3 col-md-3">
+											                <a class="lightbox" href="assets/images/backgrounds/2.jpg">
+											                    <img src="assets/images/backgrounds/2.jpg">
+											                </a>
+											            </div>
+
+											            <div class="col-sm-3 col-md-3">
+											                <a class="lightbox" href="assets/images/backgrounds/3.jpg">
+											                    <img src="assets/images/backgrounds/3.jpg">
+											                </a>
+											            </div>
+
+											            <div class="col-sm-3 col-md-3">
+											                <a class="lightbox" href="assets/images/backgrounds/4.jpg">
+											                    <img src="assets/images/backgrounds/4.jpg">
+											                </a>
+											            </div>
+
+											            <div class="col-sm-3 col-md-3">
+											                <a class="lightbox" href="assets/images/backgrounds/3.jpg">
+											                    <img src="assets/images/backgrounds/3.jpg">
+											                </a>
+											            </div>
+
+											            <div class="col-sm-3 col-md-3">
+											                <a class="lightbox" href="assets/images/backgrounds/4.jpg">
+											                    <img src="assets/images/backgrounds/4.jpg">
+											                </a>
+											            </div>
+
+											            <div class="col-sm-3 col-md-3">
+											                <a class="lightbox" href="assets/images/backgrounds/3.jpg">
+											                    <img src="assets/images/backgrounds/3.jpg">
+											                </a>
+											            </div>
+
+											            <div class="col-sm-3 col-md-3">
+											                <a class="lightbox" href="assets/images/backgrounds/5.jpg">
+											                    <img src="assets/images/backgrounds/5.jpg">
+											                </a>
+											            </div>
+
+											            </center>
+
+											        </div>
+
+											    </div>
+
+											</div>
+										</div>
+
+										
+
+										
+										
+									</div>
+
+									<div class="panel-footer panel-footer-transparent">
+										<div class="heading-elements">
+											<span class="heading-btn pull-right">
+												<a href="#" class="btn btn-link">Read post <i class="icon-arrow-right14 position-right"></i></a>
+												<a href="#" class="btn btn-link"><i class="icon-share2 position-right"></i> Share</a>
+											</span>
+										</div>
+									</div>
+
+
+								</div>
+							</div>
+							<!-- /Annoucement -->
+
+						</div>
+					</div>
+					<!-- Timeline -->
+
+					<!-- Load More -->
+			        <div class="row">
+					    <div class="text-center">
+					        <button class="btn btn-link">Load More...</button>
+					    </div>
+					</div>
+					<!-- Load More -->
+
+				</div>
 			</div>
 			<!-- /Main content -->
 		</div>
@@ -179,3 +271,8 @@
 	<!-- Page container -->
 </body>
 </html>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
+<script>
+    baguetteBox.run('.tz-gallery');
+</script>
