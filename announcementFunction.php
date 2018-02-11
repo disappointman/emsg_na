@@ -5,7 +5,18 @@ require_once('config.php');
 $connect = new Connect();
 $con = $connect ->connectDB();
 
-if(isset($_POST["title"])){
+if(isset($_POST['idannouncement'])){
+	$id = mysqli_real_escape_string($con,stripcslashes(trim($_POST["idannouncement"])));
+	$title = mysqli_real_escape_string($con,stripcslashes(trim($_POST["title"])));
+	$body = mysqli_real_escape_string($con,stripcslashes(trim($_POST["body"])));
+	$author = mysqli_real_escape_string($con,stripcslashes(trim($_POST["author"])));
+	if(isset($_FILES['picture']) && $_FILES['picture']['size'] > 0){
+		$image = addslashes(file_get_contents($_FILES['picture']['tmp_name'])); //SQL Injection defence! 
+		update($id,$title,$body,$author,$connect,$image);
+	}
+	else
+		update($id,$title,$body,$author,$connect);
+} else if(isset($_POST["title"])){
 	$title = mysqli_real_escape_string($con,stripcslashes(trim($_POST["title"])));
 	$body = mysqli_real_escape_string($con,stripcslashes(trim($_POST["body"])));
 	$author = mysqli_real_escape_string($con,stripcslashes(trim($_POST["author"])));
@@ -15,7 +26,9 @@ if(isset($_POST["title"])){
 	}
 	else
 		insert($title,$body,$author,$connect);
-}else{
+}
+
+ else{
 
 }
 
@@ -45,4 +58,33 @@ function insert($title,$body,$author,$connect,$picture = null){
 		echo $ex;
 	}
 }
+
+function update($id, $title,$body,$author,$connect,$picture = null){
+	if($picture != null){
+		$query = "UPDATE announcement SET title = '".$title."', body = '".$body."', author = '".$author."', picture = '".$picture."', dateandtime = '".date("Y-m-d H:i:s")."' WHERE idannouncement = '". $id ."';";
+	}
+	else{		
+		$query = "UPDATE announcement SET title = '".$title."', body = '".$body."', author = '".$author."', dateandtime = '".date("Y-m-d H:i:s")."' WHERE idannouncement = '". $id ."';";
+	}
+
+	try{
+		$result = $connect->insert($query);
+		if($result){
+			echo '<script type="text/javascript">
+		 			window.location = "timeline.php";
+		 			alert("Success!");
+		 			</script>';
+		}else{
+			echo '<script type="text/javascript">
+		 			window.location = "AddAnnouncement.php";
+		 			alert("Failed!");
+		 			</script>';
+		}
+	}
+	catch(Exception $ex){
+		echo $ex;
+	}
+}
+
+
 ?>

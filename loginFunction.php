@@ -17,6 +17,8 @@ if(isset($_POST["employeeID"]) && isset($_POST["password"])){
 				if($username == $result['username'] && $password == $result['password']){
 					$_SESSION['id'] = $result['iduser'];
 					echo "<script> window.location = 'AddAnnouncement.php'; alert('Login Succesful'); </script>";
+				}else{
+					echo "<script> window.location ='Login.php'; alert('Login Failed');</script>";
 				}
 			}
 		}

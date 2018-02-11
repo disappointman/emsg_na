@@ -7,10 +7,14 @@ if($_SESSION['counter']!=0)
 	$counter = $_SESSION['counter'];
 else
 	$counter = 3;
+
 require_once('config.php');
-$connect = new Connect();
-$query = "SELECT * FROM announcement ORDER BY idannouncement DESC LIMIT $counter";
-$announcements = $connect->select($query);
+require("AccountHandler.php");
+$conn = new Connect();
+$handler = new AccountHandler();
+$con = $conn -> connectDB();
+$query = "SELECT * FROM announcement ORDER BY dateandtime DESC LIMIT $counter";
+$announcements = $conn->select($query);
 $visible = 'block';
 
 if($counter > mysqli_num_rows($announcements)){
@@ -89,23 +93,34 @@ if($counter > mysqli_num_rows($announcements)){
 
 		<div class="navbar-collapse collapse" id="navbar-mobile">
 			<ul class="nav navbar-nav">
-				<li><a class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a></li>
+				<li><a style="display:<?php if(!isset($_SESSION['id'])) echo 'none;'; else echo 'block;'; ?>" class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a></li>
 			</ul>
 
 			<div class="navbar-right">
 				<ul class="nav navbar-nav">
 					</li>
-
-					<li class="dropdown dropdown-user">
+					<!-- if logged in -->
+					<li class="dropdown dropdown-user" style="display:<?php if(!isset($_SESSION['id'])) echo 'none;'; else echo 'block;'; ?>">
 						<a class="dropdown-toggle" data-toggle="dropdown">
-							<span>Username</span>
+							<span>
+								<?php 
+								if(isset($_SESSION['id'])){
+									$results= $handler->getNameById($_SESSION['id']);
+									echo $results;
+								}
+								?>
+							</span>
 							<i class="caret"></i>
 						</a>
-
 						<ul class="dropdown-menu dropdown-menu-right">
 							<!-- <li><a href="#"><i class="icon-cog5"></i> Account settings</a></li> -->
-							<li><a href="#"><i class="icon-switch2"></i> Logout</a></li>
+							<li><a href="logoutFunction.php"><i class="icon-switch2"></i> Logout</a></li>
 						</ul>
+					</li>
+					
+					<!-- if not logged in -->
+					<li style="display:<?php if(!isset($_SESSION['id'])) echo 'block;'; else echo 'none;'; ?>">
+						<a href="login.php"><i class="icon-switch2"></i> Log in</a>
 					</li>
 				</ul>
 			</div>
@@ -120,21 +135,19 @@ if($counter > mysqli_num_rows($announcements)){
 		<div class="page-content">
 
 			<!-- Main sidebar -->
-			<div class="sidebar sidebar-main sidebar-default">
+			<div class="sidebar sidebar-main sidebar-default" <?php if(!isset($_SESSION['id'])) echo 'style=display:none;'; ?> >
 				<div class="sidebar-content">
 
 					<!-- Main navigation -->
-					<div class="sidebar-category sidebar-category-visible">
+					<div class="sidebar-category sidebar-category-visible" >
 						<div class="category-content no-padding">
 							<ul class="navigation navigation-main navigation-accordion">
 
 								<!-- Main -->
-								<li class="navigation-header"><span>Feeds</span> <i class="icon-menu" title="Main"></i></li>
-								<li><a href="#"><i class="icon-newspaper"></i> <span>Announcement Feed</span></a></li>
-
+								<li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main"></i></li>
+								<li class="active"><a href="timeline.php"><i class="icon-newspaper"></i> <span>View Timeline</span></a></li>
 								<li class="navigation-header"><span>Publish</span> <i class="icon-menu" title="Publish"></i></li>
-								<li class="active"><a href="index.php"><i class="icon-pencil7"></i> <span>Publish News</span></a></li>
-								<!-- Main -->
+								<li><a href="AddAnnouncement.php"><i class="icon-pencil7"></i> <span>Publish Announcement</span></a></li>
 								
 							</ul>
 						</div>
@@ -152,7 +165,7 @@ if($counter > mysqli_num_rows($announcements)){
 				<div class="page-header page-header-default">
 					<div class="page-header-content">
 						<div class="page-title">
-							<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">News & Announcements</span> - Timeline</h4>
+							<h4> <span class="text-semibold">News & Announcements</span> - Timeline</h4>
 						</div>
 					</div>
 				</div>
@@ -184,22 +197,28 @@ if($counter > mysqli_num_rows($announcements)){
 										</div>
 
 										<div class="panel-body">
-											<div class="col-lg-6">
+											<div class="col-lg-8">
 												<h3 class="text-semibold"><?php echo $info['title'];?></h3>
 												<p class="content-group"><?php echo $info['body'];?></p>
 											</div>
 
-											<div class="col-lg-6">
+											<div class="col-lg-4">
 												<div class="gallery-container">
 												    <div class="tz-gallery">
 												        <div class="row">
 												        	<center>
-												        		<div class="col-sm-3 col-md-3">
-													                <a class="lightbox" href="assets/images/backgrounds/2.jpg">
-													                    <img src="assets/images/backgrounds/2.jpg">
-													                </a>
-													            </div>
-													            <div class="col-sm-3 col-md-3">
+												        		<?php  
+												        			if(!is_null($info['picture'])){
+													                	echo '<div class="col-sm-6 col-md-6">
+													                	<a class="lightbox" href="data:image/jpeg;base64,'.base64_encode($info['picture']).'">
+													                		<img src="data:image/jpeg;base64,'.base64_encode($info['picture']).'"/>
+													                		</a>
+													                		</div>
+													                		';
+													                }
+													             ?>
+													            
+													            <!-- <div class="col-sm-3 col-md-3">
 													                <a class="lightbox" href="assets/images/backgrounds/3.jpg">
 													                    <img src="assets/images/backgrounds/3.jpg">
 													                </a>
@@ -228,7 +247,7 @@ if($counter > mysqli_num_rows($announcements)){
 													                <a class="lightbox" href="assets/images/backgrounds/5.jpg">
 													                    <img src="assets/images/backgrounds/5.jpg">
 													                </a>
-													            </div>
+													            </div> -->
 												            </center>
 												        </div>
 												    </div>
@@ -238,9 +257,10 @@ if($counter > mysqli_num_rows($announcements)){
 
 										<div class="panel-footer">
 											<div class="heading-elements">
-												<span class="heading-btn pull-right">
-													<a href="#" class="btn btn-link">Read post <i class="icon-arrow-right14 position-right"></i></a>
-													<a href="#" class="btn btn-link"><i class="icon-share2 position-right"></i> Share</a>
+												<span class="heading-btn pull-right"> 
+													<a href='ViewAnnouncement.php?id=<?php echo $info["idannouncement"];?>' class="btn btn-link">Read post <i class="icon-arrow-right14 position-right"></i></a>
+													<a href='EditAnnouncement.php?id=<?php echo $info["idannouncement"];?>' <?php if(!isset($_SESSION['id'])) echo 'style=display:none;'; ?> class="btn btn-link">Edit post <i class="icon-pencil7 position-right"></i></a>
+													<!-- <a href="#" class="btn btn-link"><i class="icon-share2 position-right"></i> Share</a> -->
 												</span>
 											</div>
 										</div>

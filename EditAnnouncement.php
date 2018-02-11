@@ -3,11 +3,29 @@ session_start();
 if(!isset($_SESSION['id'])){
 	echo '<script>window.location = "login.php";</script>';
 }
+
+$idannouncement ='';
+
+if(!isset($_GET['id'])){
+	echo '<script>window.location = "logoutFunction.php";</script>';
+}
+else{
+	if(isset($_GET['id'])){
+		$idannouncement = mysql_real_escape_string($_GET['id']);
+		if(!is_numeric($idannouncement)){
+			echo "<script> window.location = 'logoutFunction.php'; alert('Error in query string! Redirecting to login page.'); </script>";
+		}
+	}
+}
+
 require_once('config.php');
 require("AccountHandler.php");
 $conn = new Connect();
 $handler = new AccountHandler();
 $con = $conn -> connectDB();
+
+$query = "SELECT * FROM announcement WHERE idannouncement = '".$idannouncement."' AND markedasdeleted = 0;";
+$result = $conn->select($query);
 
 ?>
 
@@ -16,7 +34,7 @@ $con = $conn -> connectDB();
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>CREOTEC - Publish Announcement</title>
+	<title>CREOTEC - Edit Announcement</title>
 
 	<link rel="shortcut icon" type="image/x-icon" href="assets/favicon.ico">
 
@@ -132,7 +150,7 @@ $con = $conn -> connectDB();
 				<div class="page-header page-header-default">
 					<div class="page-header-content">
 						<div class="page-title">
-							<h4> <!-- <i class="icon-arrow-left52 position-left"></i> --> <span class="text-semibold">News & Announcements</span></h4>
+							<h4> <a href="timeline.php"> <i class="icon-arrow-left52 position-left"></i> </a> <span class="text-semibold">News & Announcements</span></h4>
 						</div>
 					</div>
 				</div>
@@ -152,33 +170,49 @@ $con = $conn -> connectDB();
 										<div class="heading-elements">
 					                	</div>
 									</div>
+										<?php 
+											foreach($result as $ann){
+										?>
+
 
 									<div class="panel-body">
 										<div class="form-group">
-											<label><strong>Title:</strong> </label>
-											<input type="text" class="form-control" id="title" name="title" required>
+											<label><strong>Title:</strong> </label> 
+											<input type="text" class="form-control" value="<?php echo $ann['title']; ?>" id="title" name="title" required>
 										</div>
 
 										<div class="form-group">
 											<label><strong>Author:</strong> </label>
-											<input type="text" class="form-control" value="<?php echo $results;?>" id="author" name="author" required>
+											<input type="text" class="form-control" value="<?php echo $ann['author']; ?>" id="author" name="author" required>
 										</div>
 
 										<div class="form-group">
 											<label><strong>Body:</strong></label>
-											<textarea rows="5" cols="5" class="form-control" id="body" name="body" required></textarea>
+											<textarea rows="5" cols="5" class="form-control" id="body" name="body" required><?php echo $ann['body']; ?></textarea>
 										</div>
 
 										<div class="form-group">
 											<label><strong>Upload Picture:</strong></label>
+											<?php 
+												if(!is_null($ann['picture'])){
+													echo '<div class="form-group"><a class="lightbox" href="data:image/jpeg;base64,'.base64_encode($ann['picture']).'">
+							                		<img class="img-center" src="data:image/jpeg;base64,'.base64_encode($ann['picture']).'"/>
+							                		</a></div>';	
+												}
+											?>
 											<input type="file" class="file-styled" id="picture" name="picture" accept="image/*">
 										</div>
+
+										<input type="hidden" id="idannouncement" name="idannouncement" value="<?php echo $ann['idannouncement']; ?>" />
 										
+										<?php
+											}
+										?>
 									</div>
 
 								<div class="panel-footer">
 									<div class="text-right">
-										<button type="submit" class="btn btn-primary">Post <i class="icon-arrow-right14 position-right"></i></button>
+										<button type="submit" class="btn btn-primary">Update <i class="icon-arrow-right14 position-right"></i></button>
 									</div>
 								</div>
 

@@ -20,7 +20,7 @@ $announcements = $connect->select($query);
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Add Announcements</title>
+	<title>CREOTEC - View Announcements</title>
 
 	<link rel="shortcut icon" type="image/x-icon" href="assets/favicon.ico">
 
@@ -68,23 +68,36 @@ $announcements = $connect->select($query);
 
 		<div class="navbar-collapse collapse" id="navbar-mobile">
 			<ul class="nav navbar-nav">
-				<li><a class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a></li>
+				<li><a style="display:<?php if(!isset($_SESSION['id'])) echo 'none;'; else echo 'block;'; ?>" class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a></li>
 			</ul>
 
 			<div class="navbar-right">
 				<ul class="nav navbar-nav">
 					</li>
-
-					<li class="dropdown dropdown-user">
+					<li class="dropdown dropdown-user" style="display:<?php if(!isset($_SESSION['id'])) echo 'none;'; else echo 'block;'; ?>">
 						<a class="dropdown-toggle" data-toggle="dropdown">
-							<span>Username</span>
+							<span>
+								<?php 
+								if(isset($_SESSION['id'])){
+									$query = "SELECT * FROM user, user_information WHERE user.iduser_information = user_information.iduser_information AND iduser =".$_SESSION['id'];
+									$accounts = $connect -> select($query);
+									foreach($accounts as $account){
+										echo $account['lastname'].", ". $account['firstname']." ". $account['middlename'];
+									}
+								}
+								?>
+							</span>
 							<i class="caret"></i>
 						</a>
-
 						<ul class="dropdown-menu dropdown-menu-right">
 							<!-- <li><a href="#"><i class="icon-cog5"></i> Account settings</a></li> -->
-							<li><a href="#"><i class="icon-switch2"></i> Logout</a></li>
+							<li><a href="logoutFunction.php"><i class="icon-switch2"></i> Logout</a></li>
 						</ul>
+					</li>
+					
+					<!-- if not logged in -->
+					<li style="display:<?php if(!isset($_SESSION['id'])) echo 'block;'; else echo 'none;'; ?>">
+						<a href="login.php"><i class="icon-switch2"></i> Log in</a>
 					</li>
 				</ul>
 			</div>
@@ -99,7 +112,7 @@ $announcements = $connect->select($query);
 		<div class="page-content">
 
 			<!-- Main sidebar -->
-			<div class="sidebar sidebar-main sidebar-default">
+			<div class="sidebar sidebar-main sidebar-default" <?php if(!isset($_SESSION['id'])) echo 'style=display:none;'; ?> >
 				<div class="sidebar-content">
 
 					<!-- Main navigation -->
@@ -109,9 +122,9 @@ $announcements = $connect->select($query);
 
 								<!-- Main -->
 								<li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main"></i></li>
-								<li><a href="#"><i class="icon-newspaper"></i> <span>Home</span></a></li>
+								<li class="active"><a href="timeline.php"><i class="icon-newspaper"></i> <span>View Timeline</span></a></li>
 								<li class="navigation-header"><span>Publish</span> <i class="icon-menu" title="Publish"></i></li>
-								<li class="active"><a href="index.php"><i class="icon-pencil7"></i> <span>Publish News</span></a></li>
+								<li><a href="AddAnnouncement.php"><i class="icon-pencil7"></i> <span>Publish Announcement</span></a></li>
 								
 							</ul>
 						</div>
@@ -127,12 +140,16 @@ $announcements = $connect->select($query);
 				<div class="page-header page-header-default">
 					<div class="page-header-content">
 						<div class="page-title">
-							<h4><!-- <i class="icon-arrow-left52 position-left"></i> --> <span class="text-semibold">News & Announcements</span><!--  - Announcement --></h4>
+							<h4> <a href="timeline.php"> <i class="icon-arrow-left52 position-left"></i> </a> <span class="text-semibold">News & Announcements</span><!--  - Announcement --></h4>
 						</div>
 					</div>
 				</div>				
-				<div class="container" style="margin-left: 190px; width: 90%;">
+				<div class="container" style="width: 90%;">
   					<div class="row">
+  						<!-- to middle the mid -->
+  						<div class="col-md-1">
+  						</div>
+  						<!-- to middle the mid -->
   						<div class="col-md-10">
 	   						<div class="singlepost_area">
 	   							<div class="singlepost_content"> 
@@ -163,7 +180,16 @@ $announcements = $connect->select($query);
 					                	echo $author;
 					                ?>
 					                </label>
-					                <img class="img-center" src="../images/hot_img1.jpg" alt="">
+					                
+					                <?php
+					                $image = $ann['picture'];
+					                if(!is_null($image)){
+					                	echo '<a class="lightbox" href="data:image/jpeg;base64,'.base64_encode($image).'">
+					                		<img class="img-center" src="data:image/jpeg;base64,'.base64_encode($image).'"/>
+					                		</a>';
+					                }
+					                ?>
+
 					                <p>
 					                	<?php
 					                		$body = $ann['body'];
@@ -202,6 +228,10 @@ $announcements = $connect->select($query);
 				              </div>
 				            </div>
 				        </div>
+  						<!-- to middle the mid -->
+  						<div class="col-md-1">
+  						</div>
+  						<!-- to middle the mid -->
 				    </div>
 				</div>
 			</div>
