@@ -13,7 +13,7 @@ require("AccountHandler.php");
 $conn = new Connect();
 $handler = new AccountHandler();
 $con = $conn -> connectDB();
-$query = "SELECT * FROM announcement ORDER BY dateandtime DESC LIMIT $counter";
+$query = "SELECT * FROM announcement WHERE markedasdeleted = 0 ORDER BY dateandtime DESC LIMIT $counter";
 $announcements = $conn->select($query);
 $visible = 'block';
 
@@ -30,7 +30,7 @@ if($counter > mysqli_num_rows($announcements)){
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>CREOTEC - Announcement Feed</title>
 
-	<link rel="shortcut icon" type="image/x-icon" href="assets/favicon.ico">
+	<link rel="shortcut icon" type="image/x-icon" href="assets/images/icon.png">
 
 	<!-- Global stylesheets -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
@@ -177,8 +177,8 @@ if($counter > mysqli_num_rows($announcements)){
 						<div class="timeline-container">
 
 							<!-- Announcement -->
-
-						    <?php if($announcements){
+						    <?php 
+						    if($announcements){
 								foreach($announcements as $info){?>
 
 								<div class="timeline-row">
@@ -192,14 +192,14 @@ if($counter > mysqli_num_rows($announcements)){
 										<div class="panel-heading">
 											<h3 class="panel-title"><?php echo $info['author'];?></h3>
 											<div class="heading-elements">
-												<h3 class="panel-title text-muted"><?php echo $info['dateandtime'];?></h3>
+												<h3 class="panel-title text-muted"><?php echo date("M. d, Y - H:i A", strtotime($info['dateandtime']));?></h3>
 						                	</div>
 										</div>
 
 										<div class="panel-body">
 											<div class="col-lg-8">
 												<h3 class="text-semibold"><?php echo $info['title'];?></h3>
-												<p class="content-group"><?php echo $info['body'];?></p>
+												<p class="content-group"><?php if(strlen($info['body']) > 140) echo substr($info['body'], 0, 140)."..."; else echo $info['body']; ?></p>
 											</div>
 
 											<div class="col-lg-4">
@@ -207,17 +207,13 @@ if($counter > mysqli_num_rows($announcements)){
 												    <div class="tz-gallery">
 												        <div class="row">
 												        	<center>
+												        		<div class="col-sm-6 col-md-6">
 												        		<?php  
 												        			if(!is_null($info['picture'])){
-													                	echo '<div class="col-sm-6 col-md-6">
-													                	<a class="lightbox" href="data:image/jpeg;base64,'.base64_encode($info['picture']).'">
-													                		<img src="data:image/jpeg;base64,'.base64_encode($info['picture']).'"/>
-													                		</a>
-													                		</div>
-													                		';
+													                	echo '<img src="data:image/jpeg;base64,'.base64_encode($info['picture']).'"/>';
 													                }
 													             ?>
-													            
+													            </div>
 													            <!-- <div class="col-sm-3 col-md-3">
 													                <a class="lightbox" href="assets/images/backgrounds/3.jpg">
 													                    <img src="assets/images/backgrounds/3.jpg">
@@ -268,7 +264,11 @@ if($counter > mysqli_num_rows($announcements)){
 
 								</div>
 									
-							<?php }}?>
+							<?php }
+							} else{
+								echo "<script> alert('Nothing posted!');</script>";
+							}
+							?>
 							<!-- /Annoucement -->
 
 						</div>

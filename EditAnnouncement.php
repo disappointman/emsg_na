@@ -36,7 +36,7 @@ $result = $conn->select($query);
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>CREOTEC - Edit Announcement</title>
 
-	<link rel="shortcut icon" type="image/x-icon" href="assets/favicon.ico">
+	<link rel="shortcut icon" type="image/x-icon" href="assets/images/icon.png">
 
 	<!-- Global stylesheets -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">

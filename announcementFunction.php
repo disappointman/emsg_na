@@ -26,9 +26,7 @@ if(isset($_POST['idannouncement'])){
 	}
 	else
 		insert($title,$body,$author,$connect);
-}
-
- else{
+} else{
 
 }
 

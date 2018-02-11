@@ -22,7 +22,7 @@ $announcements = $connect->select($query);
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>CREOTEC - View Announcements</title>
 
-	<link rel="shortcut icon" type="image/x-icon" href="assets/favicon.ico">
+	<link rel="shortcut icon" type="image/x-icon" href="assets/images/icon.png">
 
 	<!-- Global stylesheets -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
@@ -203,15 +203,20 @@ $announcements = $connect->select($query);
 					               <!-- <div class="singlepage_pagination"> <a class="previous_btn" href="#">Previous</a> <a class="next_btn" href="#">Next</a> </div> -->
 					               
 					                <!-- share link -->
-					                <!-- <div class="social_area wow fadeInLeft">
+					                <div class="social_area wow fadeInLeft">
+					                	<h5>Share via:</h5>
+					                <?php
+					                	$actual_link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+					                 ?>
+
 					                  <ul>
-					                    <li><a href="#"><span class="fa fa-facebook"></span></a></li>
-					                    <li><a href="#"><span class="fa fa-twitter"></span></a></li>
-					                    <li><a href="#"><span class="fa fa-google-plus"></span></a></li>
-					                    <li><a href="#"><span class="fa fa-linkedin"></span></a></li>
-					                    <li><a href="#"><span class="fa fa-pinterest"></span></a></li>
+					                    <li><a href="http://www.facebook.com/sharer.php?u=<?php echo $actual_link; ?>" target="_blank"><!-- <span class="fa fa-facebook"></span> --><img src="assets/images/somacro/facebook.png" alt="facebook"/></a></li>
+					                    <li><a href="https://twitter.com/share?url=<?php echo $actual_link; ?>&amp;text=Announcement!%20Check%20this%20out!&amp;hashtags=CREOTEC"><!-- <span class="fa fa-twitter"></span> --><img src="assets/images/somacro/twitter.png" alt="twitter"/></a></li>
+					                    <li><a href="https://plus.google.com/share?url=<?php echo $actual_link; ?>"><!-- <span class="fa fa-google-plus"></span> --><img src="assets/images/somacro/google.png" alt="google+"/></a></li>
+					                    <li><a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=<?php echo $actual_link; ?>"><!-- <span class="fa fa-linkedin"></span> --><img src="assets/images/somacro/linkedin.png" alt="linked in"/></a></li>
+					                  	<!--  <li><a href="javascript:void((function()%7Bvar%20e=document.createElement('script');e.setAttribute('type','text/javascript');e.setAttribute('charset','UTF-8');e.setAttribute('src','http://assets.pinterest.com/js/pinmarklet.js?r='+Math.random()*99999999);document.body.appendChild(e)%7D)());"><span class="fa fa-pinterest"></span><img src="assets/images/somacro/pinterest.png" alt="pinterest"/></a></li>-->
 					                  </ul>
-					                </div> -->
+					                </div>
 
 					                <!-- author -->
 					                <!-- <div class="author"> <a href="#"><img src="../images/100x100.jpg" alt=""></a>
@@ -220,6 +225,16 @@ $announcements = $connect->select($query);
 					                    <p>About Author Content lobortis. Proin ut nibh quis felis auctor ornare. Cras ultricies, nibh at mollis faucibus, justo eros porttitor mi, quis auctor lectus arcu sit amet nunc. Vivamus gravida vehicula arcu, vitae vulputate augue lacinia faucibus</p>
 					                  </div>
 					                </div> -->
+
+					                <div class="author" <?php if(!isset($_SESSION['id'])) echo 'style="display:none;";'; ?>>
+					                  <div class="author_details">
+					                    <h5>Administrative Tools:</h5>
+					                    <span class="heading-btn pull-right"> 
+											<a href='deleteannouncement.php?id=<?php echo $ann["idannouncement"];?>' onclick="confirm('Are you sure you want to delete this post?');" class="btn btn-link">Delete post <i class="icon-cog5 position-right"></i></a>
+											<a href='EditAnnouncement.php?id=<?php echo $ann["idannouncement"];?>' class="btn btn-link">Edit post <i class="icon-pencil7 position-right"></i></a>
+											</span>
+					                  </div>
+					                </div>
 
 	   							<?php
 
