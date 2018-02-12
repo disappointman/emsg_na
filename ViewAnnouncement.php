@@ -185,7 +185,7 @@ $announcements = $connect->select($query);
 					                $image = $ann['picture'];
 					                if(!is_null($image)){
 					                	echo '<a class="lightbox" href="data:image/jpeg;base64,'.base64_encode($image).'">
-					                		<img class="img-center" src="data:image/jpeg;base64,'.base64_encode($image).'"/>
+					                		<img style="max-width: 100%; max-height: 100%; vertical-align: middle; padding-bottom: 20px;" class="img-center" src="data:image/jpeg;base64,'.base64_encode($image).'"/>
 					                		</a>';
 					                }
 					                ?>
