@@ -64,19 +64,11 @@ if($counter > mysqli_num_rows($announcements)){
 	<!-- /theme JS files -->
 
 	<style type="text/css">
-		img {
-		    max-width: 100%;
-		    max-height: 100%;
-		    vertical-align: middle;
-
-		    padding-bottom: 20px;
-		}
-
+		
 		.center{
 		    display:block;
 		    margin:auto;
 		}
-
 
 	</style>
 </head>
@@ -210,7 +202,7 @@ if($counter > mysqli_num_rows($announcements)){
 												        		<div class="col-sm-6 col-md-6">
 												        		<?php  
 												        			if(!is_null($info['picture'])){
-													                	echo '<img src="data:image/jpeg;base64,'.base64_encode($info['picture']).'"/>';
+													                	echo '<img style="max-width: 100%; max-height: 100%; vertical-align: middle;		    padding-bottom: 20px;" src="data:image/jpeg;base64,'.base64_encode($info['picture']).'"/>';
 													                }
 													             ?>
 													            </div>
