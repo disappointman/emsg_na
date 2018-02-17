@@ -7,35 +7,37 @@ $con = $connect ->connectDB();
 
 if(isset($_POST['idannouncement'])){
 	$id = mysqli_real_escape_string($con,stripcslashes(trim($_POST["idannouncement"])));
+	$type = mysqli_real_escape_string($con,stripcslashes(trim($_POST["dropdownFor"])));
 	$title = mysqli_real_escape_string($con,stripcslashes(trim($_POST["title"])));
 	$body = mysqli_real_escape_string($con,stripcslashes(trim($_POST["body"])));
 	$author = mysqli_real_escape_string($con,stripcslashes(trim($_POST["author"])));
 	if(isset($_FILES['picture']) && $_FILES['picture']['size'] > 0){
 		$image = addslashes(file_get_contents($_FILES['picture']['tmp_name'])); //SQL Injection defence! 
-		update($id,$title,$body,$author,$connect,$image);
+		update($id,$type,$title,$body,$author,$connect,$image);
 	}
 	else
-		update($id,$title,$body,$author,$connect);
+		update($id,$type,$title,$body,$author,$connect);
 } else if(isset($_POST["title"])){
 	$title = mysqli_real_escape_string($con,stripcslashes(trim($_POST["title"])));
+	$type = mysqli_real_escape_string($con,stripcslashes(trim($_POST["dropdownFor"])));
 	$body = mysqli_real_escape_string($con,stripcslashes(trim($_POST["body"])));
 	$author = mysqli_real_escape_string($con,stripcslashes(trim($_POST["author"])));
 	if(isset($_FILES['picture']) && $_FILES['picture']['size'] > 0){
 		$image = addslashes(file_get_contents($_FILES['picture']['tmp_name'])); //SQL Injection defence! 
-		insert($title,$body,$author,$connect,$image);
+		insert($type,$title,$body,$author,$connect,$image);
 	}
 	else
-		insert($title,$body,$author,$connect);
+		insert($type,$title,$body,$author,$connect);
 } else{
 
 }
 
-function insert($title,$body,$author,$connect,$picture = null){
+function insert($type,$title,$body,$author,$connect,$picture = null){
 	if($picture != null){
-		$query = "INSERT INTO announcement(title,body,author,picture,`dateandtime`,iduser) VALUES('".$title."','".$body."','".$author."','".$picture."','".date("Y-m-d H:i:s")."','".$_SESSION['id']."')";
+		$query = "INSERT INTO announcement(announcementtype,title,body,author,picture,`dateandtime`,iduser) VALUES('".$type."','".$title."','".$body."','".$author."','".$picture."','".date("Y-m-d H:i:s")."','".$_SESSION['id']."')";
 	}
 	else{
-		$query = "INSERT INTO announcement(title,body,author,`dateandtime`,iduser) VALUES('".$title."','".$body."','".$author."','".date("Y-m-d H:i:s")."','".$_SESSION['id']."')";
+		$query = "INSERT INTO announcement(announcementtype,title,body,author,`dateandtime`,iduser) VALUES('".$type."','".$title."','".$body."','".$author."','".date("Y-m-d H:i:s")."','".$_SESSION['id']."')";
 	}
 
 	try{
@@ -57,19 +59,19 @@ function insert($title,$body,$author,$connect,$picture = null){
 	}
 }
 
-function update($id, $title,$body,$author,$connect,$picture = null){
+function update($id,$type,$title,$body,$author,$connect,$picture = null){
 	if($picture != null){
-		$query = "UPDATE announcement SET title = '".$title."', body = '".$body."', author = '".$author."', picture = '".$picture."', dateandtime = '".date("Y-m-d H:i:s")."' WHERE idannouncement = '". $id ."';";
+		$query = "UPDATE announcement SET announcementtype = '".$type."', title = '".$title."', body = '".$body."', author = '".$author."', picture = '".$picture."', dateandtime = '".date("Y-m-d H:i:s")."' WHERE idannouncement = '". $id ."';";
 	}
 	else{		
-		$query = "UPDATE announcement SET title = '".$title."', body = '".$body."', author = '".$author."', dateandtime = '".date("Y-m-d H:i:s")."' WHERE idannouncement = '". $id ."';";
+		$query = "UPDATE announcement SET announcementtype = '".$type."', title = '".$title."', body = '".$body."', author = '".$author."', dateandtime = '".date("Y-m-d H:i:s")."' WHERE idannouncement = '". $id ."';";
 	}
 
 	try{
 		$result = $connect->insert($query);
 		if($result){
 			echo '<script type="text/javascript">
-		 			window.location = "timeline.php";
+		 			window.location = "timeline.php?type='.$type.';
 		 			alert("Success!");
 		 			</script>';
 		}else{

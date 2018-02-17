@@ -1,5 +1,25 @@
 <?php
 session_start();
+
+if(!isset($_GET['type'])){
+	echo "<script> window.location = 'logoutFunction.php';</script>";
+}
+
+$anntype = mysql_real_escape_string($_GET['type']);
+if(!is_numeric($anntype)){
+	echo "<script> window.location = 'logoutFunction.php';</script>";	
+}
+else{
+	if($anntype != "1" && $anntype != "2")
+	{
+		echo "<script> window.location = 'logoutFunction.php';</script>";	
+	}
+	if($anntype == "2" && !isset($_SESSION['id']))
+	{
+		echo "<script> window.location = 'logoutFunction.php';</script>";	
+	}
+}
+
 if(!isset($_SESSION['counter'])){
 	$_SESSION['counter'] = 3;
 }
@@ -13,7 +33,7 @@ require("AccountHandler.php");
 $conn = new Connect();
 $handler = new AccountHandler();
 $con = $conn -> connectDB();
-$query = "SELECT * FROM announcement WHERE markedasdeleted = 0 ORDER BY dateandtime DESC LIMIT $counter";
+$query = "SELECT * FROM announcement WHERE markedasdeleted = 0 AND announcementtype = '".$anntype."' ORDER BY dateandtime DESC LIMIT $counter";
 $announcements = $conn->select($query);
 $visible = 'block';
 
@@ -137,7 +157,8 @@ if($counter > mysqli_num_rows($announcements)){
 
 								<!-- Main -->
 								<li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main"></i></li>
-								<li class="active"><a href="timeline.php"><i class="icon-newspaper"></i> <span>View Timeline</span></a></li>
+								<li <?php if($anntype == "1") echo "class='active'"; ?> ><a href="timeline.php?type=1"><i class="icon-newspaper"></i> <span>View Timeline</span></a></li>
+								<li <?php if($anntype == "2") echo "class='active'"; ?> ><a href="timeline.php?type=2"><i class="icon-newspaper"></i> <span>View Employee's Timeline</span></a></li>
 								<li class="navigation-header"><span>Publish</span> <i class="icon-menu" title="Publish"></i></li>
 								<li><a href="AddAnnouncement.php"><i class="icon-pencil7"></i> <span>Publish Announcement</span></a></li>
 								
@@ -270,7 +291,7 @@ if($counter > mysqli_num_rows($announcements)){
 					<!-- Load More -->
 			        <div class="row">
 					    <div class="text-center" style='display:<?php echo $visible; ?>'>
-					        <a class="btn btn-link" href="counterSetter.php">Load More...</a>
+					        <a class="btn btn-link" <?php echo 'href="counterSetter.php?type='.$_GET['type'].'"'; ?> >Load More...</a>
 					        <label> </label>
 					    </div>
 					    <div class="text-center" style='display:<?php if($visible == "none") { echo "block"; } else { echo "none"; }?>'>

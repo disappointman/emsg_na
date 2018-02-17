@@ -2,7 +2,7 @@
 session_start();
 
 if(isset($_SESSION['id'])){
-    echo "<script> window.location = 'timeline.php';</script>";
+    echo "<script> window.location = 'timeline.php?type=1';</script>";
 }
 ?>
 <!DOCTYPE html>

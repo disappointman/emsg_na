@@ -119,13 +119,18 @@ $announcements = $connect->select($query);
 					<div class="sidebar-category sidebar-category-visible">
 						<div class="category-content no-padding">
 							<ul class="navigation navigation-main navigation-accordion">
-
+									<?php
+	   									foreach($announcements as $anntype){
+									?>
 								<!-- Main -->
 								<li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main"></i></li>
-								<li class="active"><a href="timeline.php"><i class="icon-newspaper"></i> <span>View Timeline</span></a></li>
+								<li <?php if($anntype['announcementtype'] == "1") echo "class='active'"; ?> ><a href="timeline.php?type=1"><i class="icon-newspaper"></i> <span>View Timeline</span></a></li>
+								<li <?php if($anntype['announcementtype'] == "2") echo "class='active'"; ?> ><a href="timeline.php?type=2"><i class="icon-newspaper"></i> <span>View Employee's Timeline</span></a></li>
 								<li class="navigation-header"><span>Publish</span> <i class="icon-menu" title="Publish"></i></li>
 								<li><a href="AddAnnouncement.php"><i class="icon-pencil7"></i> <span>Publish Announcement</span></a></li>
 								
+									<?php 
+									}?>
 							</ul>
 						</div>
 					</div>

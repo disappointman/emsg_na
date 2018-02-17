@@ -131,7 +131,8 @@ $result = $conn->select($query);
 								
 								<!-- Main -->
 								<li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main"></i></li>
-								<li><a href="timeline.php"><i class="icon-newspaper"></i> <span>View Timeline</span></a></li>
+								<li><a href="timeline.php?type=1"><i class="icon-newspaper"></i> <span>View Timeline</span></a></li>
+								<li><a href="timeline.php?type=2"><i class="icon-newspaper"></i> <span>View Employee's Timeline</span></a></li>
 								<li class="navigation-header"><span>Publish</span> <i class="icon-menu" title="Publish"></i></li>
 								<li class="active"><a href="AddAnnouncement.php"><i class="icon-pencil7"></i> <span>Publish Announcement</span></a></li>
 								
@@ -176,6 +177,14 @@ $result = $conn->select($query);
 
 
 									<div class="panel-body">
+										<div class="form-group">
+											<label><strong>For:</strong> </label>
+											<select id="dropdownFor" name="dropdownFor" class="form-control select" required>
+												<option value="1" <?php if($ann['announcementtype'] == "1") echo "selected"; ?> >Everyone</option>
+												<option value="2" <?php if($ann['announcementtype'] == "2") echo "selected"; ?> >Employees</option>
+											</select>
+										</div>
+
 										<div class="form-group">
 											<label><strong>Title:</strong> </label> 
 											<input type="text" class="form-control" value="<?php echo $ann['title']; ?>" id="title" name="title" required>
