@@ -4,6 +4,10 @@ if(!isset($_SESSION['id'])){
 	echo '<script>window.location = "login.php";</script>';
 }
 
+if($_SESSION['emp_type'] == "2"){
+	echo '<script>window.location = "login.php";</script>';	
+}
+
 $idannouncement ='';
 
 if(!isset($_GET['id'])){

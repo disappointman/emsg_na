@@ -159,8 +159,8 @@ if($counter > mysqli_num_rows($announcements)){
 								<li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main"></i></li>
 								<li <?php if($anntype == "1") echo "class='active'"; ?> ><a href="timeline.php?type=1"><i class="icon-newspaper"></i> <span>View Timeline</span></a></li>
 								<li <?php if($anntype == "2") echo "class='active'"; ?> ><a href="timeline.php?type=2"><i class="icon-newspaper"></i> <span>View Employee's Timeline</span></a></li>
-								<li class="navigation-header"><span>Publish</span> <i class="icon-menu" title="Publish"></i></li>
-								<li><a href="AddAnnouncement.php"><i class="icon-pencil7"></i> <span>Publish Announcement</span></a></li>
+								<li class="navigation-header" <?php if($_SESSION['emp_type'] == "2") echo "style='display:none;'"; ?> ><span>Publish</span> <i class="icon-menu" title="Publish"></i></li>
+								<li <?php if($_SESSION['emp_type'] == "2") echo "style='display:none;'"; ?> ><a href="AddAnnouncement.php"><i class="icon-pencil7"></i> <span>Publish Announcement</span></a></li>
 								
 							</ul>
 						</div>

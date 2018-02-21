@@ -3,6 +3,11 @@ session_start();
 if(!isset($_SESSION['id'])){
 	echo '<script>window.location = "login.php";</script>';
 }
+
+if($_SESSION['emp_type'] == "2"){
+	echo '<script>window.location = "login.php";</script>';	
+}
+
 require_once('config.php');
 require("AccountHandler.php");
 $conn = new Connect();

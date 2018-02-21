@@ -33,6 +33,7 @@ $announcements = $connect->select($query);
 	<link href="assets/css/colors.css" rel="stylesheet" type="text/css">
 	<link href="assets/css/structure.css" rel="stylesheet" type="text/css">
 	<link href="assets/css/animate.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<!-- /global stylesheets -->
 
 	<!-- Core JS files -->
@@ -126,8 +127,8 @@ $announcements = $connect->select($query);
 								<li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main"></i></li>
 								<li <?php if($anntype['announcementtype'] == "1") echo "class='active'"; ?> ><a href="timeline.php?type=1"><i class="icon-newspaper"></i> <span>View Timeline</span></a></li>
 								<li <?php if($anntype['announcementtype'] == "2") echo "class='active'"; ?> ><a href="timeline.php?type=2"><i class="icon-newspaper"></i> <span>View Employee's Timeline</span></a></li>
-								<li class="navigation-header"><span>Publish</span> <i class="icon-menu" title="Publish"></i></li>
-								<li><a href="AddAnnouncement.php"><i class="icon-pencil7"></i> <span>Publish Announcement</span></a></li>
+								<li class="navigation-header" <?php if($_SESSION['emp_type'] == "2") echo "style='display:none;'"; ?> ><span>Publish</span> <i class="icon-menu" title="Publish"></i></li>
+								<li <?php if($_SESSION['emp_type'] == "2") echo "style='display:none;'"; ?> ><a href="AddAnnouncement.php"><i class="icon-pencil7"></i> <span>Publish Announcement</span></a></li>
 								
 									<?php 
 									}?>
@@ -215,10 +216,10 @@ $announcements = $connect->select($query);
 					                 ?>
 
 					                  <ul>
-					                    <li><a href="http://www.facebook.com/sharer.php?u=<?php echo $actual_link; ?>" target="_blank"><!-- <span class="fa fa-facebook"></span> --><img src="assets/images/somacro/facebook.png" alt="facebook"/></a></li>
-					                    <li><a href="https://twitter.com/share?url=<?php echo $actual_link; ?>&amp;text=Announcement!%20Check%20this%20out!&amp;hashtags=CREOTEC"><!-- <span class="fa fa-twitter"></span> --><img src="assets/images/somacro/twitter.png" alt="twitter"/></a></li>
-					                    <li><a href="https://plus.google.com/share?url=<?php echo $actual_link; ?>"><!-- <span class="fa fa-google-plus"></span> --><img src="assets/images/somacro/google.png" alt="google+"/></a></li>
-					                    <li><a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=<?php echo $actual_link; ?>"><!-- <span class="fa fa-linkedin"></span> --><img src="assets/images/somacro/linkedin.png" alt="linked in"/></a></li>
+					                    <li><a href="http://www.facebook.com/sharer.php?u=<?php echo $actual_link; ?>" target="_blank"><span class="fa fa-facebook"></span> <!-- <img src="assets/images/somacro/facebook.png" alt="facebook"/> --></a></li>
+					                    <li><a href="https://twitter.com/share?url=<?php echo $actual_link; ?>&amp;text=Announcement!%20Check%20this%20out!&amp;hashtags=CREOTEC"><span class="fa fa-twitter"></span> <!--<img src="assets/images/somacro/twitter.png" alt="twitter"/>--> </a></li>
+					                    <li><a href="https://plus.google.com/share?url=<?php echo $actual_link; ?>" class="fa fa-google-plus"> <!-- <img src="assets/images/somacro/google.png" alt="google+"/> --></a></li>
+					                    <li><a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=<?php echo $actual_link; ?>"> <span class="fa fa-linkedin"></span> <!-- <img src="assets/images/somacro/linkedin.png" alt="linked in"/> --></a></li>
 					                  	<!--  <li><a href="javascript:void((function()%7Bvar%20e=document.createElement('script');e.setAttribute('type','text/javascript');e.setAttribute('charset','UTF-8');e.setAttribute('src','http://assets.pinterest.com/js/pinmarklet.js?r='+Math.random()*99999999);document.body.appendChild(e)%7D)());"><span class="fa fa-pinterest"></span><img src="assets/images/somacro/pinterest.png" alt="pinterest"/></a></li>-->
 					                  </ul>
 					                </div>
@@ -231,7 +232,7 @@ $announcements = $connect->select($query);
 					                  </div>
 					                </div> -->
 
-					                <div class="author" <?php if(!isset($_SESSION['id'])) echo 'style="display:none;";'; ?>>
+					                <div class="author" <?php if(!isset($_SESSION['id']) || $_SESSION['emp_type'] == "2") echo 'style="display:none;";'; ?>>
 					                  <div class="author_details">
 					                    <h5>Administrative Tools:</h5>
 					                    <span class="heading-btn pull-right"> 
