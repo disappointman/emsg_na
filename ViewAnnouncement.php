@@ -208,7 +208,7 @@ $announcements = $connect->select($query);
 					               <!-- <div class="singlepage_pagination"> <a class="previous_btn" href="#">Previous</a> <a class="next_btn" href="#">Next</a> </div> -->
 					               
 					                <!-- share link -->
-					                <div class="social_area wow fadeInLeft">
+					                <div class="social_area wow fadeInLeft" <?php if($ann['announcementtype'] == "2") echo "style='display:none;'"; ?> >
 					                	<h5>Share via:</h5>
 					                <?php
 					                	$actual_link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
