@@ -29,7 +29,7 @@ if(isset($_POST['idannouncement'])){
 	else
 		insert($type,$title,$body,$author,$connect);
 } else{
-
+	echo "boboness";
 }
 
 function insert($type,$title,$body,$author,$connect,$picture = null){
@@ -71,7 +71,7 @@ function update($id,$type,$title,$body,$author,$connect,$picture = null){
 		$result = $connect->insert($query);
 		if($result){
 			echo '<script type="text/javascript">
-		 			window.location = "timeline.php?type='.$type.';
+		 			window.location = "timeline.php?type='.$type.'";
 		 			alert("Success!");
 		 			</script>';
 		}else{

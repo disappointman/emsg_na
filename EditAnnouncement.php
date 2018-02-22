@@ -139,7 +139,9 @@ $result = $conn->select($query);
 								<li><a href="timeline.php?type=2"><i class="icon-newspaper"></i> <span>View Employee's Timeline</span></a></li>
 								<li class="navigation-header"><span>Publish</span> <i class="icon-menu" title="Publish"></i></li>
 								<li class="active"><a href="AddAnnouncement.php"><i class="icon-pencil7"></i> <span>Publish Announcement</span></a></li>
-								
+								<li class="navigation-header"><span>Accounts</span> <i class="icon-user" title="Accounts"></i></li>
+								<li><a href="AddAccount.php"><i class="icon-user"></i> <span>Add Account</span></a></li>
+								<li><a href="ManageAccount.php"><i class="icon-cog5"></i> <span>Manage Accounts</span></a>
 							</ul>
 						</div>
 					</div>
@@ -178,7 +180,6 @@ $result = $conn->select($query);
 										<?php 
 											foreach($result as $ann){
 										?>
-
 
 									<div class="panel-body">
 										<div class="form-group">

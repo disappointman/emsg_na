@@ -161,7 +161,9 @@ if($counter > mysqli_num_rows($announcements)){
 								<li <?php if($anntype == "2") echo "class='active'"; ?> ><a href="timeline.php?type=2"><i class="icon-newspaper"></i> <span>View Employee's Timeline</span></a></li>
 								<li class="navigation-header" <?php if($_SESSION['emp_type'] == "2") echo "style='display:none;'"; ?> ><span>Publish</span> <i class="icon-menu" title="Publish"></i></li>
 								<li <?php if($_SESSION['emp_type'] == "2") echo "style='display:none;'"; ?> ><a href="AddAnnouncement.php"><i class="icon-pencil7"></i> <span>Publish Announcement</span></a></li>
-								
+								<li <?php if($_SESSION['emp_type'] == "2") echo "style='display:none;'"; ?> class="navigation-header"><span>Accounts</span> <i class="icon-user" title="Accounts"></i></li>
+								<li <?php if($_SESSION['emp_type'] == "2") echo "style='display:none;'"; ?> ><a href="AddAccount.php"><i class="icon-user"></i> <span>Add Account</span></a></li>
+								<li <?php if($_SESSION['emp_type'] == "2") echo "style='display:none;'"; ?> ><a href="ManageAccount.php"><i class="icon-cog5"></i> <span>Manage Accounts</span></a></li>
 							</ul>
 						</div>
 					</div>
@@ -268,7 +270,7 @@ if($counter > mysqli_num_rows($announcements)){
 											<div class="heading-elements">
 												<span class="heading-btn pull-right"> 
 													<a href='ViewAnnouncement.php?id=<?php echo $info["idannouncement"];?>' class="btn btn-link">Read post <i class="icon-arrow-right14 position-right"></i></a>
-													<a href='EditAnnouncement.php?id=<?php echo $info["idannouncement"];?>' <?php if(!isset($_SESSION['id'])) echo 'style=display:none;'; ?> class="btn btn-link">Edit post <i class="icon-pencil7 position-right"></i></a>
+													<a href='EditAnnouncement.php?id=<?php echo $info["idannouncement"];?>' <?php if(!isset($_SESSION['id']) || $_SESSION['emp_type'] == 2) echo 'style=display:none;'; ?> class="btn btn-link">Edit post <i class="icon-pencil7 position-right"></i></a>
 													<!-- <a href="#" class="btn btn-link"><i class="icon-share2 position-right"></i> Share</a> -->
 												</span>
 											</div>

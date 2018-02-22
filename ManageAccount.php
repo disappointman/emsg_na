@@ -1,31 +1,34 @@
 <?php
 session_start();
+
 if(!isset($_SESSION['id'])){
-	echo '<script>window.location = "login.php";</script>';
+	echo "<script> window.location = 'login.php';</script>";
 }
 
 if($_SESSION['emp_type'] == "2"){
-	echo '<script>window.location = "login.php";</script>';	
+	echo "<script> window.location = 'login.php';</script>";
 }
 
-require_once('config.php');
+require("config.php");
 require("AccountHandler.php");
-$conn = new Connect();
 $handler = new AccountHandler();
-$con = $conn -> connectDB();
-
+$results = $handler->getAccounts();
+$num = $results->num_rows;
+if($num == 0){
+	echo "<script> window.location = 'ManageAccount.php';alert('Account does not exist or already deleted!');</script>";	
+}
 ?>
 
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>CREOTEC - Publish Announcement</title>
+	<title>CREOTEC - Accounts</title>
 
 	<link rel="shortcut icon" type="image/x-icon" href="assets/images/icon.png">
-
-	<!-- Global stylesheets -->
+		<!-- Global stylesheets -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
 	<link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
 	<link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css">
@@ -42,18 +45,25 @@ $con = $conn -> connectDB();
 	<!-- /core JS files -->
 
 	<!-- Theme JS files -->
-	<script type="text/javascript" src="assets/js/plugins/forms/validation/validate.min.js"></script>
-	<script type="text/javascript" src="assets/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
-	<script type="text/javascript" src="assets/js/plugins/forms/inputs/touchspin.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/tables/datatables/datatables.min.js"></script>
 	<script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>
-	<script type="text/javascript" src="assets/js/plugins/forms/styling/switch.min.js"></script>
-	<script type="text/javascript" src="assets/js/plugins/forms/styling/switchery.min.js"></script>
-	<script type="text/javascript" src="assets/js/plugins/forms/styling/uniform.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/notifications/sweet_alert.min.js"></script>
 
 	<script type="text/javascript" src="assets/js/core/app.js"></script>
-	<script type="text/javascript" src="assets/js/pages/form_validation.js"></script>
+	<script type="text/javascript" src="assets/js/pages/datatables_data_sources.js"></script>
+	<script type="text/javascript" src="assets/js/pages/components_modals.js"></script>
 	<!-- /theme JS files -->
 </head>
+<style type="text/css">
+	th, td { white-space: nowrap; }
+    div.dataTables_wrapper {
+        margin: 0 auto;
+    }
+ 
+    div.container {
+        width: 80%;
+    }
+</style>
 <body>
 	<!-- Main navbar -->
 	<div class="navbar navbar-default">
@@ -78,8 +88,8 @@ $con = $conn -> connectDB();
 							<span>
 								<?php 
 								if(isset($_SESSION['id'])){
-									$results= $handler->getNameById($_SESSION['id']);
-									echo $results;
+									$resulte= $handler->getNameById($_SESSION['id']);
+									echo $resulte;
 								}
 								?>
 							</span>
@@ -121,15 +131,14 @@ $con = $conn -> connectDB();
 								<li><a href="timeline.php?type=1"><i class="icon-newspaper"></i> <span>View Timeline</span></a></li>
 								<li><a href="timeline.php?type=2"><i class="icon-newspaper"></i> <span>View Employee's Timeline</span></a></li>
 								<li class="navigation-header"><span>Publish</span> <i class="icon-menu" title="Publish"></i></li>
-								<li class="active"><a href="AddAnnouncement.php"><i class="icon-pencil7"></i> <span>Publish Announcement</span></a></li>
+								<li><a href="AddAnnouncement.php"><i class="icon-pencil7"></i> <span>Publish Announcement</span></a></li>
 								<li class="navigation-header"><span>Accounts</span> <i class="icon-user" title="Accounts"></i></li>
 								<li><a href="AddAccount.php"><i class="icon-user"></i> <span>Add Account</span></a></li>
-								<li><a href="ManageAccount.php"><i class="icon-cog5"></i> <span>Manage Accounts</span></a>
+								<li class="active"><a href="ManageAccount.php"><i class="icon-cog5"></i> <span>Manage Accounts</span></a></li>
 							</ul>
 						</div>
 					</div>
 					<!-- /main navigation -->
-
 				</div>
 			</div>
 			<!-- /main sidebar -->
@@ -137,83 +146,107 @@ $con = $conn -> connectDB();
 			<!-- Main content -->
 			<div class="content-wrapper">
 				<!-- Page header -->
-				<div class="page-header page-header-default">
-					<div class="page-header-content">
-						<div class="page-title">
-							<h4> <!-- <i class="icon-arrow-left52 position-left"></i> --> <span class="text-semibold">News & Announcements</span></h4>
-						</div>
-					</div>
-				</div>
-				<!-- /page header -->
+                <div class="page-header page-header-default">
+                    <div class="page-header-content">
+                        <div class="page-title">
+                		    <h4><span class="text-semibold">Accounts</span></h4>
+                        </div>
+                        </div>
+                    </div>
+                    <!-- /page header -->
 
-				<!-- Content area -->
-				<div class="content">
-					
-					<div class="row">
-						<div class="col-lg-12">
-
-							<!-- Basic layout-->
-							<form action="announcementFunction.php" method="POST" class="form-validate-jquery" enctype="multipart/form-data">
+                    <!-- Content area -->
+                    <div class="content">
+                      	<div class="row">
+							<div class="col-lg-12">
 								<div class="panel panel-flat">
 									<div class="panel-heading">
-										<h5 class="panel-title"><i class="icon-bubble-lines4" style="margin-right: 10px"></i>Publish Announcement</h5>
+										<h5 class="panel-title">Manage Accounts</h5>
 										<div class="heading-elements">
-					                	</div>
+								   		</div>
 									</div>
 
 									<div class="panel-body">
-										<div class="form-group">
-											<label><strong>For:</strong> </label>
-											<select id="dropdownFor" name="dropdownFor" class="form-control select" required>
-												<option value="1">Everyone</option>
-												<option value="2">Employees</option>
-											</select>
-										</div>
+										<table class="table datatable-html" style='font-size: 13px;' name="table1" id="table1">
+											<thead style="font-size: 13px;">
+												<tr>
+													<th>Username</th>
+									                <th>Full Name</th>
+									                <th>E-mail</th>
+									                <th>Contact Number</th>
+									                <th class="text-center">Actions</th>
+									            </tr>
+											</thead>
 
-										<div class="form-group">
-											<label><strong>Title:</strong> </label>
-											<input type="text" class="form-control" id="title" name="title" required>
-										</div>
-
-										<div class="form-group">
-											<label><strong>Author:</strong> </label>
-											<input type="text" class="form-control" value="<?php echo $results;?>" id="author" name="author" required>
-										</div>
-
-										<div class="form-group">
-											<label><strong>Body:</strong></label>
-											<textarea rows="5" cols="5" class="form-control" id="body" name="body" required></textarea>
-										</div>
-
-										<div class="form-group">
-											<label><strong>Upload Picture:</strong></label>
-											<input type="file" class="file-styled" id="picture" name="picture" accept="image/*">
-										</div>
-										
-									</div>
-
-								<div class="panel-footer">
-									<div class="text-right">
-										<button type="submit" class="btn btn-primary">Post <i class="icon-arrow-right14 position-right"></i></button>
+											<tbody style="font-size: 12px;">
+												<?php if($results){
+													foreach($results as $result){
+													?>
+										            <tr>
+										            	<td><?php echo $result['username'];?></td>
+										                <td><?php echo $result['lastname'].", ". $result['firstname'] . " ".$result['middlename'];?></td>
+										                <td><?php echo $result['email'];?></td>
+										                <td><?php echo $result['contact_number'];?></td>
+														<td class="text-center">
+															<a href="EditAccount.php?id=<?php echo $result['iduser'];?>" id="update" name="update" style="color: #2980b9"><i class="icon-pencil" style="margin-right: 3px;"></i>Update</a>
+															<a href="#" name="sample" id="sample" style="color: #d35400;" onclick="promptDelete(<?php echo $result['iduser']; ?>)"><i class="icon-trash" style="margin-left: 5px; margin-right: 3px;"></i>Delete</a>
+																	
+														</td>
+										            </tr>
+									            <?php }}?>   
+									        </tbody>
+										</table>
 									</div>
 								</div>
-
-								</div>
-							</form>
-							<!-- /basic layout -->
-
+						    </div>
 						</div>
-					</div>
-
+                    </div>
+                   	<!-- /Content area -->				
 				</div>
-				<!-- Content area -->
-
+				<!-- /Main content -->
 			</div>
-			<!-- /Main content -->
-
+			<!-- Page content -->
 		</div>
 		<!-- Page content -->
+
 	</div>
 	<!-- Page container -->
+	<script type="text/javascript">
+	    // Warning alert
+		$('#table1').dataTable( {
+		  "columnDefs": [ {
+			"targets": 2,
+			"orderable": false
+			} ]
+		} );
+	    function promptDelete(val){
+	    	swal({
+	            title: "Are you sure?",
+	            text: "You will not be able to recover this information!",
+	            type: "warning",
+	            showCancelButton: true,
+	            confirmButtonColor: "#FF7043",
+	            confirmButtonText: "Delete",
+	            closeOnConfirm: true,
+	            closeOnCancel: true
+	       	},
+	       	function(isConfirm){
+	      		if(isConfirm){
+	       			deleteSchool(val);
+	       		}
+	        });
+	    }
+
+	    function deleteSchool(val){
+	    	$.ajax({
+				type: "POST",
+				url: "accountFunction.php",
+				data: 'iduser=' + val,
+				success: function(data){
+					window.location ='ManageAccount.php';
+				}
+			});
+		}
+	</script>
 </body>
 </html>
