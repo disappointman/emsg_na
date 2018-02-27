@@ -137,7 +137,7 @@ $handler = new AccountHandler();
                 <div class="page-header page-header-default">
                 	<div class="page-header-content">
                     	<div class="page-title">
-                        	<h4><span class="text-semibold">Accounts</span> - Add Accounts</h4>
+                        	<h4><span class="text-semibold">Accounts</span></h4>
                         </div>
                     </div>
                 </div>

@@ -173,7 +173,7 @@ $result = $conn->select($query);
 							<form action="announcementFunction.php" method="POST" class="form-validate-jquery" enctype="multipart/form-data">
 								<div class="panel panel-flat">
 									<div class="panel-heading">
-										<h5 class="panel-title"><i class="icon-bubble-lines4" style="margin-right: 10px"></i>Publish Announcement</h5>
+										<h5 class="panel-title"><i class="icon-bubble-lines4" style="margin-right: 10px"></i>Edit Announcement</h5>
 										<div class="heading-elements">
 					                	</div>
 									</div>
