@@ -16,7 +16,7 @@ if(isset($_POST["employeeID"]) && isset($_POST["password"])){
 			foreach($results as $result){
 				if($username == $result['username'] && $password == $result['password']){
 					$_SESSION['id'] = $result['iduser'];
-					$_SESSION['emp_type'] = $result['accountype'];
+					$_SESSION['emp_type'] = $result['accounttype'];
 					echo "<script> window.location = 'timeline.php?type=1'; alert('Login Succesful'); </script>";
 				}else{
 					echo "<script> window.location ='Login.php'; alert('Login Failed');</script>";

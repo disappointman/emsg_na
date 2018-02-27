@@ -82,7 +82,7 @@ function insertAccount($username, $password, $firstname, $middlename, $lastname,
 	$lastId = $conn->insertWithLastId($query);
 
 	if($lastId != ""){
-		$query = "INSERT INTO user (iduser_information, username, password, accountype) VALUES ('".$lastId."', '".$username."', '".$password."', 2);";
+		$query = "INSERT INTO user (iduser_information, username, password, accounttype) VALUES ('".$lastId."', '".$username."', '".$password."', 2);";
 		$result = $conn->insert($query);
 		return $result;	
 	}else{

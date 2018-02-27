@@ -18,14 +18,14 @@ class AccountHandler{
 
 	public function getAccounts(){
 		$con = new Connect();
-		$query = "SELECT * FROM user u INNER JOIN user_information ui ON u.iduser_information = ui.iduser_information WHERE u.accountype = 2 AND u.status = 1;";
+		$query = "SELECT * FROM user u INNER JOIN user_information ui ON u.iduser_information = ui.iduser_information WHERE u.accounttype = 2 AND u.status = 1;";
 		$result = $con->select($query);
 		return $result;
 	}
 
 	public function getAccountById($id){
 		$con = new Connect();
-		$query = "SELECT * FROM user u INNER JOIN user_information ui ON u.iduser_information = ui.iduser_information WHERE u.accountype = 2 AND u.status = 1 AND iduser = ".$id.";";
+		$query = "SELECT * FROM user u INNER JOIN user_information ui ON u.iduser_information = ui.iduser_information WHERE u.accounttype = 2 AND u.status = 1 AND iduser = ".$id.";";
 		$result = $con->select($query);
 		return $result;
 	}

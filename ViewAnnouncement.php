@@ -148,7 +148,7 @@ $announcements = $connect->select($query);
 				<div class="page-header page-header-default">
 					<div class="page-header-content">
 						<div class="page-title">
-							<h4> <a href="timeline.php"> <i class="icon-arrow-left52 position-left"></i> </a> <span class="text-semibold">News & Announcements</span><!--  - Announcement --></h4>
+							<h4> <a href="timeline.php?type=1"> <i class="icon-arrow-left52 position-left"></i> </a> <span class="text-semibold">News & Announcements</span><!--  - Announcement --></h4>
 						</div>
 					</div>
 				</div>				

@@ -192,11 +192,11 @@ $con = $conn -> connectDB();
 										
 									</div>
 
-								<div class="panel-footer">
-									<div class="text-right">
-										<button type="submit" class="btn btn-primary">Post <i class="icon-arrow-right14 position-right"></i></button>
+									<div class="panel-footer">
+										<div class="text-right">
+											<button type="submit" class="btn btn-primary" onclick="confirm('Are you sure?');" style="margin-right: 10px;">Post <i class="icon-arrow-right14 position-right"></i></button>
+										</div>
 									</div>
-								</div>
 
 								</div>
 							</form>
